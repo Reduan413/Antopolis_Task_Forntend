@@ -1,0 +1,72 @@
+      
+      
+      
+      
+      
+const menuItems = [
+{
+  title: 'Home',
+  subMenu: null,
+},
+{
+  title: 'Products',
+  subMenu: [
+    {
+      title: 'Electronics',
+      subMenu: [
+        { title: 'Mobiles', subMenu: null },
+        { title: 'Laptops', subMenu: null },
+        { title: 'Cameras', subMenu: null },
+      ],
+    },
+    {
+      title: 'Clothing',
+      subMenu: [
+        { title: 'Men', subMenu: null },
+        { title: 'Women', subMenu: null },
+        { title: 'Kids', subMenu: null },
+      ],
+    },
+  ],
+},
+{
+  title: 'Contact',
+  subMenu: null,
+},
+];
+
+const DropdownItem = ({ item }) => {
+const [isHovered, setIsHovered] = useState(false);
+
+const handleHover = () => {
+  setIsHovered(!isHovered);
+};
+
+return (
+  <div className="mx-3"  onMouseEnter={handleHover} onMouseLeave={handleHover}>
+    {item.title}
+    {item.subMenu && isHovered && (
+      <ul className="sub-menu">
+        {item.subMenu.map((subItem, index) => (
+          <DropdownItem key={index} item={subItem} />
+        ))}
+      </ul>
+    )}
+  </div>
+);
+};
+
+const DropdownMenu = () => {
+return (
+  <div className="menu d-flex w-50">
+    {menuItems.map((item, index) => (
+      <DropdownItem key={index} item={item} />
+    ))}
+  </div>
+);
+};
+
+      
+      
+      <h1>Multi-layer Dropdown Menu</h1>
+      <DropdownMenu />
