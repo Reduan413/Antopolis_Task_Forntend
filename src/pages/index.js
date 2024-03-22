@@ -4,6 +4,8 @@ import axios from "axios";
 import Image from "next/image";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import AddCategoryModal from "@/components/AddCategoryModal";
+import AddAnimalModal from "@/components/AddAnimalModal";
 
 export default function Home() {
   const [cats, setCats] = useState([]);
@@ -11,10 +13,13 @@ export default function Home() {
   const [newAnimal, setNewAnimal] = useState(null);
   const [catID, setCatID] = useState(null);
   const [animals, setAnimals] = useState([]);
-  const [show, setShow] = useState(false);
+  const [categoryShow, setCategoryShow] = useState(false);
+  const [animalShow, setAnimalShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleCategoryClose = () => setCategoryShow(false);
+  const handleCategoryShow = () => setCategoryShow(true);
+  const handleAnimalClose = () => setAnimalShow(false);
+  const handleAnimalShow = () => setAnimalShow(true);
 
   useEffect(() => {
     fetchCats();
@@ -110,11 +115,12 @@ export default function Home() {
             </ul>
           )}
           <div style={{ padding: 10 }}>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" onClick={handleCategoryShow}>
               Add Category
             </Button>
-            <button>Add Category</button>
-            <button>Add Animal</button>
+            <Button variant="primary" onClick={handleAnimalShow}>
+              Add Animal
+            </Button>
           </div>
         </div>
         <div>
@@ -187,26 +193,8 @@ export default function Home() {
           </form>
         </div>
       </main>
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          I will not close if you click outside me. Do not even try to press
-          escape key.
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary">Understood</Button>
-        </Modal.Footer>
-      </Modal>
+      <AddCategoryModal show={categoryShow} handleClose={handleCategoryClose} />
+      <AddAnimalModal show={animalShow} handleClose={handleAnimalClose} />
     </div>
   );
 }
